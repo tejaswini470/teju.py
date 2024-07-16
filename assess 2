@@ -1,0 +1,32 @@
+# Define a dictionary to store the inventory data
+inventory = {
+    'product1': {
+        'warehouse1': 100,
+        'warehouse2': 50,
+    },
+    'product2': {
+        'warehouse1': 200,
+        'warehouse2': 150,
+    },
+    # Add more products and warehouses as needed
+}
+
+# Function to check stock levels for a given product
+def check_stock(product):
+    if product in inventory:
+        return inventory[product]
+    else:
+        return "Product not found in inventory"
+
+# Function to update stock levels for a given product and warehouse
+def update_stock(product, warehouse, quantity):
+    if product in inventory and warehouse in inventory[product]:
+        inventory[product][warehouse] += quantity
+    else:
+        return "Product or warehouse not found in inventory"
+
+# Example usage
+print(check_stock('product1'))  # Output: {'warehouse1': 100, 'warehouse2': 50}
+
+update_stock('product1', 'warehouse1', -10)
+print(check_stock('product1'))  # Output: {'warehouse1': 90, 'warehouse2': 50}
