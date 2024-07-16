@@ -1,0 +1,68 @@
+import requests
+
+# Function to fetch weather data from the API
+def fetch_weather_data(location):
+    api_key = "289b9dae0a45dc7407d62b34f14aae6e"  # Replace with your OpenWeatherMap API key
+    base_url = "http://api.openweathermap.org/data/2.5/weather"
+
+    # Build the API request URL
+    if location.isdigit():
+        params = {
+            "id": location,
+            "appid": api_key,
+            "units": "metric"
+        }
+    else:
+        params = {
+            "q": location,
+            "appid": api_key,
+            "units": "metric"
+        }
+
+    try:
+        # Send the API request
+        response = requests.get(base_url, params=params)
+        response.raise_for_status()  # Raise an exception if the request was not successful
+
+        # Extract the weather data from the response
+        weather_data = response.json()
+
+        return weather_data
+
+    except requests.exceptions.HTTPError as errh:
+        print("HTTP Error:", errh)
+    except requests.exceptions.RequestException as err:
+        print("Request Exception:", err)
+    except ValueError as err:
+        print("Invalid response from the API:", err)
+
+    return None
+
+# Function to display the weather information
+def display_weather_data(weather_data):
+    if weather_data is None:
+        print("Unable to fetch weather data.")
+        return
+
+    # Extract the relevant information from the weather data
+    temperature = weather_data["main"]["temp"]
+    weather_conditions = weather_data["weather"][0]["description"]
+    humidity = weather_data["main"]["humidity"]
+    wind_speed = weather_data["wind"]["speed"]
+
+    # Display the weather information to the user
+    print("Current Weather Information:")
+    print("Temperature:", temperature, "°C")
+    print("Conditions:", weather_conditions)
+    print("Humidity:", humidity, "%")
+    print("Wind Speed:", wind_speed, "m/s")
+
+# Main program
+def main():
+    location = input("Enter the location (city name or coordinates): ")
+    weather_data = fetch_weather_data(location)
+    display_weather_data(weather_data)
+
+# Run the application
+if __name__ == "__main__":
+    main()
