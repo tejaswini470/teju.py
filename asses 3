@@ -1,0 +1,19 @@
+def display_traffic_data(traffic_data):
+    if traffic_data:
+        current_conditions = traffic_data['current_conditions']
+        estimated_travel_time = traffic_data['estimated_travel_time']
+        incidents = traffic_data['incidents']
+        
+        print('Current Traffic Conditions:')
+        for condition in current_conditions:
+            print(f"- {condition}")
+        
+        print('\nEstimated Travel Time:')
+        print(f"- {estimated_travel_time} minutes")
+        
+        if incidents:
+            print('\nIncidents:')
+            for incident in incidents:
+                print(f"- {incident}")
+    else:
+        print('Failed to fetch traffic data.')
